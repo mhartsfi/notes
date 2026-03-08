@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LOCHSQUATCH — Field Notes & Learning Journal</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet">
+<title>LOCHSQUATCH — Field Notes &amp; Learning Journal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
 <style>
   :root {
     --bark:    #1a1510;
@@ -567,8 +566,8 @@
     <div class="header-sub">Field Notes &amp; Learning Journal</div>
   </div>
   <div class="header-actions">
-    <button class="author-badge" id="changePwBtn" onclick="openChangePw()" style="display:none">🔑 Password</button>
-    <button class="author-badge" id="authorToggle" onclick="toggleAuthorMode()">✦ Author Mode</button>
+    <button class="author-badge" id="changePwBtn" onclick="openChangePw()" style="display: inline-block;">🔑 Password</button>
+    <button class="author-badge active" id="authorToggle" onclick="toggleAuthorMode()">✦ Author Mode</button>
   </div>
 </header>
 
@@ -584,8 +583,7 @@
       <label class="form-label" style="margin-bottom:6px;display:block">New Password</label>
       <input type="password" class="lock-input" id="cpNew" placeholder="••••••••" style="margin-bottom:12px">
       <label class="form-label" style="margin-bottom:6px;display:block">Confirm New Password</label>
-      <input type="password" class="lock-input" id="cpConfirm" placeholder="••••••••" style="margin-bottom:4px"
-        onkeydown="if(event.key==='Enter')submitChangePw()">
+      <input type="password" class="lock-input" id="cpConfirm" placeholder="••••••••" style="margin-bottom:4px" onkeydown="if(event.key==='Enter')submitChangePw()">
     </div>
     <div class="lock-error" id="cpError" style="height:auto;margin-bottom:10px;min-height:16px"></div>
     <div style="display:flex;gap:10px;justify-content:center">
@@ -599,13 +597,12 @@
 </div>
 
 
-<div id="authorLock">
+<div id="authorLock" class="">
   <div class="lock-box">
     <span class="lock-icon-big">🔏</span>
     <div class="lock-title">AUTHOR ACCESS</div>
     <div class="lock-sub">Enter password to edit journal</div>
-    <input type="password" class="lock-input" id="authorPwInput" placeholder="••••••••"
-      onkeydown="if(event.key==='Enter')tryAuthorUnlock()">
+    <input type="password" class="lock-input" id="authorPwInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryAuthorUnlock()">
     <div class="lock-error" id="authorLockError"></div>
     <div style="display:flex;gap:10px;justify-content:center">
       <button class="btn btn-primary" onclick="tryAuthorUnlock()">Enter</button>
@@ -620,24 +617,215 @@
     <div class="sidebar-search">
       <input type="text" class="search-input" id="searchInput" placeholder="Search field notes..." oninput="renderSidebar()">
     </div>
-    <div class="cat-filters" id="catFilters"></div>
+    <div class="cat-filters" id="catFilters">
+    <button class="cat-pill active" onclick="setCatFilter('all')">
+      All
+    </button>
+  
+    <button class="cat-pill " onclick="setCatFilter('unreal')">
+      Unreal
+    </button>
+  
+    <button class="cat-pill " onclick="setCatFilter('film')">
+      Film
+    </button>
+  
+    <button class="cat-pill " onclick="setCatFilter('general')">
+      General
+    </button>
+  </div>
     <div class="sidebar-section">
       <div class="sidebar-label">
         Field Notes
-        <span class="sidebar-count" id="noteCount">0</span>
+        <span class="sidebar-count" id="noteCount">4</span>
       </div>
-      <div id="sidebarList"></div>
+      <div id="sidebarList">
+    <div class="sidebar-item active" onclick="openNote('mmhwz5fh23asubmakzbh')">
+      <div class="start-here-marker"></div>
+      <div style="flex:1">
+        <div class="sidebar-item-title">GitHub Quick Start Guide</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-general">General</span>
+          
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">Mar 8, 2026</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="sidebar-item " onclick="openNote('mmhbdm1zisrp02266c')">
+      <div class="start-here-marker"></div>
+      <div style="flex:1">
+        <div class="sidebar-item-title">DaVinci Resolve — Session 1 Notes</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-film">Film</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--amber);letter-spacing:1px">Session 1</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">Mar 8, 2026</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="sidebar-item " onclick="openNote('mm9tf7ngxh1f57z5dy')">
+      <div class="start-here-marker"></div>
+      <div style="flex:1">
+        <div class="sidebar-item-title">Paper2D Setup Guide</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-unreal">Unreal</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--amber);letter-spacing:1px">Session 2</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">Mar 2, 2026</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="sidebar-item " onclick="openNote('mmfcltcolm7fd165qyf')">
+      
+      <div style="flex:1">
+        <div class="sidebar-item-title">Just Getting There — Session 1</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-unreal">Unreal</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--amber);letter-spacing:1px">Session 1</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">Mar 8, 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
     </div>
   </div>
 
   <!-- MAIN -->
   <div class="main" id="mainContent">
-    <div class="empty-state" id="emptyState">
+    <div class="empty-state" id="emptyState" style="display: none;">
       <span class="empty-icon">📖</span>
       <div class="empty-title">Select a Note</div>
       <div class="empty-sub">Choose an entry from the sidebar to begin reading</div>
     </div>
-    <div id="noteView" style="display:none"></div>
+    <div id="noteView" style="display: block;">
+    
+    <div class="start-here-banner">
+      <div class="start-here-icon">🌿</div>
+      <div>
+        <div class="start-here-title">Start Here</div>
+        <div class="start-here-text">This is a recommended entry point for beginners following along with this journal.</div>
+      </div>
+    </div>
+  
+    <div class="note-header">
+      <div class="note-meta">
+        <span class="note-cat-badge cat-general">General</span>
+        
+        <span class="note-date">Mar 8, 2026</span>
+        <span style="font-family:'Special Elite',cursive;font-size:0.48rem;letter-spacing:2px;color:var(--moss3);border:1px solid rgba(90,122,84,0.3);padding:2px 8px;border-radius:1px">★ START HERE</span>
+      </div>
+      <div class="note-title">GitHub Quick Start Guide</div>
+      <div class="note-actions">
+        <button class="btn btn-outline" onclick="copyNote('mmhwz5fh23asubmakzbh')">⎘ Copy Raw</button>
+        
+          <button class="btn btn-outline" onclick="openEditNote('mmhwz5fh23asubmakzbh')">✎ Edit</button>
+          <button class="btn btn-primary" onclick="exportNotes()" style="font-size:0.58rem">⬇ Export HTML</button>
+        
+      </div>
+    </div>
+
+    <div class="note-body-rendered"><h2>What Is It?</h2>
+<ul><li><strong>Git</strong> — tracks every change you make to your files, like an infinite undo history</li>
+<li><strong>GitHub</strong> — a website that stores that history online so your whole team can access it</li>
+
+<hr>
+
+<h2>One-Time Setup</h2>
+
+<h3>Check if Git is installed</h3>
+<pre><code>git --version</code></pre>
+<p>You should see something like <code>git version 2.52.0</code></p>
+
+<h3>Create a new repo on GitHub</h3>
+<ol><li>Click <strong>+</strong> in the top right → <strong>New repository</strong></li>
+<li>Give it a name (e.g. <code>studio-docs</code>)</li>
+<li>Set to <strong>Private</strong></li>
+<li>Don't check any initialize options</li>
+<li>Click <strong>Create repository</strong></li>
+
+<h3>Connect your existing folder to GitHub</h3>
+<p>Navigate to your folder in the terminal, then run:</p>
+<pre><code>git init
+<p>git add .</p>
+</code><p><code>git commit -m "first commit"</code></p></pre><p></p>
+<p>Then copy the three commands GitHub shows you under <strong>"push an existing repository"</strong>:</p>
+<pre><code>git remote add origin https://github.com/YOURNAME/YOURREPO.git
+<p>git branch -M main</p>
+</code><p><code>git push -u origin main</code></p></pre><p></p>
+<p>Your files will now appear on GitHub.</p>
+
+<hr>
+
+<h2>What Those Commands Do</h2>
+
+<table><thead><tr><th>Command</th><th>What it does</th></tr></thead><tbody><tr><td><code>git init</code></td><td>Turns your folder into a Git-tracked project</td></tr><tr><td><code>git add .</code></td><td>Stages all files (puts them in the box)</td></tr><tr><td><code>git commit -m "message"</code></td><td>Saves a snapshot (seals and labels the box)</td></tr><tr><td><code>git push</code></td><td>Uploads your changes to GitHub (ships the box)</td></tr><tr><td><code>git pull</code></td><td>Downloads the latest changes from GitHub</td></tr></tbody></table>---
+
+<h2>Daily Workflow</h2>
+<pre><code>git pull                        # grab latest before you start
+<h1>...do your work...</h1>
+<p>git add .</p>
+<p>git commit -m "what you changed"</p>
+</code><p><code>git push                        # upload when done</code></p></pre><p></p>
+
+<hr>
+
+<h2>Inviting Your Partner</h2>
+<li>Go to your repo on GitHub</li>
+<li><strong>Settings</strong> → <strong>Collaborators</strong> → <strong>Add people</strong></li>
+<li>Enter their GitHub username</li>
+<p></p></ol></ul><p></p>
+<p>They then clone the repo to their computer:</p>
+<pre><code>git clone https://github.com/YOURNAME/YOURREPO.git</code></pre></div>
+
+    <div class="reactions-bar">
+      <span class="reactions-label">Was this useful?</span>
+      
+          <button class="reaction-btn " onclick="toggleReaction('mmhwz5fh23asubmakzbh','helpful')">
+            <span class="reaction-emoji">🧭</span>
+            <span>Helpful</span>
+            
+          </button>
+        
+          <button class="reaction-btn " onclick="toggleReaction('mmhwz5fh23asubmakzbh','fire')">
+            <span class="reaction-emoji">🔥</span>
+            <span>Fire</span>
+            
+          </button>
+        
+          <button class="reaction-btn " onclick="toggleReaction('mmhwz5fh23asubmakzbh','learned')">
+            <span class="reaction-emoji">🌿</span>
+            <span>Learned This</span>
+            
+          </button>
+        
+          <button class="reaction-btn " onclick="toggleReaction('mmhwz5fh23asubmakzbh','confused')">
+            <span class="reaction-emoji">🦴</span>
+            <span>Still Confused</span>
+            
+          </button>
+        
+    </div>
+
+    <div class="entry-nav">
+      <div></div>
+      
+        <div class="entry-nav-btn right" onclick="openNote('mmhbdm1zisrp02266c')">
+          <div class="entry-nav-dir">Older →</div>
+          <div class="entry-nav-title">DaVinci Resolve — Session 1 Notes</div>
+        </div>
+      
+    </div>
+
+    
+      <div style="margin-top:24px;padding:16px 20px;border:1px dashed rgba(139,98,32,0.2);border-radius:2px;display:flex;gap:10px;align-items:center">
+        <span style="font-family:'Special Elite',cursive;font-size:0.52rem;letter-spacing:2px;color:var(--dim)">AUTHOR MODE</span>
+        <button class="btn btn-primary" onclick="openAddNote()" style="font-size:0.58rem;padding:7px 14px">+ New Entry</button>
+        <button class="btn btn-outline" onclick="openEditNote('mmhwz5fh23asubmakzbh')" style="font-size:0.58rem;padding:7px 14px">✎ Edit This Entry</button>
+        <button class="btn btn-outline" onclick="exportNotes()" style="font-size:0.58rem;padding:7px 14px">⬇ Export HTML</button>
+      </div>
+    
+  </div>
   </div>
 </div>
 
@@ -682,7 +870,11 @@
       </div>
       <div class="form-group">
         <label class="form-label">Content — markdown supported</label>
-        <textarea class="form-textarea" id="noteContent" placeholder="# Your heading&#10;&#10;Write your field notes, guide, or session recap here...&#10;&#10;Supports: **bold**, *italic*, `code`, ``` code blocks ```, - lists, > blockquotes, ## headings, --- dividers"></textarea>
+        <textarea class="form-textarea" id="noteContent" placeholder="# Your heading
+
+Write your field notes, guide, or session recap here...
+
+Supports: **bold**, *italic*, `code`, ``` code blocks ```, - lists, &gt; blockquotes, ## headings, --- dividers"></textarea>
       </div>
     </div>
     <div class="modal-footer">
@@ -704,6 +896,7 @@
 <script>
 // ══ EMBEDDED DATA ══
 // ──EMBEDDED_NOTES──
+const EMBEDDED_NOTES = [{"id":"mmhwz5fh23asubmakzbh","title":"GitHub Quick Start Guide","category":"general","session":"","startHere":true,"content":"## What Is It?\n- **Git** — tracks every change you make to your files, like an infinite undo history\n- **GitHub** — a website that stores that history online so your whole team can access it\n\n---\n\n## One-Time Setup\n\n### Check if Git is installed\n```\ngit --version\n```\nYou should see something like `git version 2.52.0`\n\n### Create a new repo on GitHub\n1. Click **+** in the top right → **New repository**\n2. Give it a name (e.g. `studio-docs`)\n3. Set to **Private**\n4. Don't check any initialize options\n5. Click **Create repository**\n\n### Connect your existing folder to GitHub\nNavigate to your folder in the terminal, then run:\n```\ngit init\ngit add .\ngit commit -m \"first commit\"\n```\nThen copy the three commands GitHub shows you under **\"push an existing repository\"**:\n```\ngit remote add origin https://github.com/YOURNAME/YOURREPO.git\ngit branch -M main\ngit push -u origin main\n```\nYour files will now appear on GitHub.\n\n---\n\n## What Those Commands Do\n\n| Command | What it does |\n|--------|--------------|\n| `git init` | Turns your folder into a Git-tracked project |\n| `git add .` | Stages all files (puts them in the box) |\n| `git commit -m \"message\"` | Saves a snapshot (seals and labels the box) |\n| `git push` | Uploads your changes to GitHub (ships the box) |\n| `git pull` | Downloads the latest changes from GitHub |\n\n---\n\n## Daily Workflow\n```\ngit pull                        # grab latest before you start\n# ...do your work...\ngit add .\ngit commit -m \"what you changed\"\ngit push                        # upload when done\n```\n\n---\n\n## Inviting Your Partner\n1. Go to your repo on GitHub\n2. **Settings** → **Collaborators** → **Add people**\n3. Enter their GitHub username\n\nThey then clone the repo to their computer:\n```\ngit clone https://github.com/YOURNAME/YOURREPO.git\n```","date":"Mar 8, 2026"},{"id":"mmhbdm1zisrp02266c","title":"DaVinci Resolve — Session 1 Notes","category":"film","session":"Session 1","startHere":true,"content":"## Getting Started\n- Open Resolve → Project Manager → create or open a project\n- Import clips: Edit page → right click in Media Pool → Import Media\n- Drag clips to the timeline to begin your rough cut\n\n## Basic Editing\n- Scrub clips in the timeline to find good moments\n- **I** = mark in point, **O** = mark out point to trim\n- Drag trimmed clips next to each other to build your cut\n\n## Fixing a Clip\n- Select clip in timeline → open **Inspector** (top right)\n- Transform → **Rotation Angle** → type `180` to flip upside-down footage\n\n## Export Settings (Instagram)\n- Go to **Deliver page** (rocket icon)\n- Codec: **H.264**, Profile: **High**, Level: **4.1**\n- Bitrate: **Constant Bitrate (CBR)** at 10–15 Mbps\n- Resolution: **1080p** for landscape\n- Hit **Add to Render Queue** → **Render All**\n\n## Audio Tips\n- Natural/ambient audio can suffer from Instagram compression\n- Fix: bump audio bitrate to **320kbps** in export Audio tab\n- Or normalize: right click audio track → **Normalize Audio Levels**\n- Adding subtle background music helps audio survive compression\n\n## Notes\n- Instagram recompresses everything — give it a high quality source file\n- Keep Reels under 90 seconds, regular posts under 60\n- Let nature footage breathe — don't cut too fast","date":"Mar 8, 2026"},{"id":"mmfcltcolm7fd165qyf","title":"Just Getting There — Session 1","category":"unreal","session":"Session 1","startHere":false,"content":"*A roguelike dark comedy platformer. Everyday life gone wrong.*\n\n---\n\n## The Concept\n\n- Player is a tired everyman trying to complete a mundane task (get to the bus stop, buy milk, return a library book)\n- Each run the level layout shifts randomly — gaps, drifting platforms\n- NPCs wander and block or shove you\n- Environmental chaos escalates each run — falling ceiling tiles, indoor rain\n- Tone: melancholy comedy. Mundane framing of absurd situations.\n- On death: a dry journal entry from your character reflecting on what went wrong\n\n---\n\n## What We Built\n\nA working browser-based prototype in React + HTML5 Canvas. One file: App.jsx.\n\n**Features in the game:**\n- Randomly generated levels with ground gaps and floating drifting platforms\n- NPCs — friendly (block you, say passive-aggressive things) and hostile (shove you off ledges)\n- Falling ceiling tiles from run 2 onwards\n- Indoor rain from run 2 onwards\n- Time limit per run — escalates chaos if you linger\n- Death screen with randomized reason + journal entry\n- Win screen with deflating victory message\n- Each run gets harder — more NPCs, wider gaps, faster hostiles\n\n**Money throwing mechanic:**\n- Press F to throw money at NPCs\n- Coins arc through the air with gravity\n- Hit an NPC — they freeze for ~2 seconds\n- Limited to 5 coins per run\n\n---\n\n## Dev Environment\n\n- VS Code + Node.js v24.14.0 (installed via Chocolatey)\n- Vite + React via `npm create vite@latest . -- --template react`\n- Run with `npm run dev` → localhost:5173\n\n---\n\n## Key Concepts Learned\n\n- **useEffect** — runs code when something changes\n- **useRef** — holds game state without re-renders\n- **requestAnimationFrame** — drives the game loop\n- **ctx.fillRect** — draws everything on canvas\n- **e.key** — which key was pressed","date":"Mar 8, 2026"},{"id":"mm9tf7ngxh1f57z5dy","title":"Paper2D Setup Guide","category":"unreal","session":"Session 2","startHere":true,"content":"# Paper2D Setup Guide\n*Unreal Engine 5 — Working setup as of Day 2*\n\n---\n\n## Step 1 — Plugins\n- Edit → Plugins\n- Enable **Paper2D**\n- Enable **PaperZD** (install free from Marketplace first)\n- Restart when prompted\n\n---\n\n## Step 2 — New Level\n- File → New Level → Empty Level\n- Clean void, no distractions\n\nAdd a **Directional Light** from Place Actors so you can see anything.\n\n---\n\n## Step 3 — Import Your Sprite\n- Drag your PNG image into the Content Browser → PaperAssets folder\n- Right click the imported texture → Create Sprite\n- Name it **SP_Player**\n- Double click SP_Player to open, assign your texture in Source Texture slot\n\n---\n\n## Step 4 — Create a Flipbook\n- Right click **SP_Player** → Create Flipbook\n- Name it **FB_Player**\n- Paper Character requires a flipbook not a static sprite\n\n---\n\n## Step 5 — Create the Character Blueprint\n- Right click in Content Browser → Blueprint Class\n- Search for **Paper Character** → select it\n- Name it **BP_Player**\n- Double click to open\n- Click **Sprite** component in Components panel\n- In Details find **Source Flipbook** → assign **FB_Player**\n\n---\n\n## Step 6 — Enhanced Input Setup\n\nCreate two assets in Content Browser:\n\nRight click → Input → **Input Action**\n- Name it **IA_MoveRight**\n- Double click, set **Value Type** to Axis1D (float)\n- Save\n\nRight click → Input → **Input Mapping Context**\n- Name it **IMC_Player**\n- Double click to open\n- Click + next to Mappings\n- Select **IA_MoveRight**\n- Add key **D** — no modifier\n- Add key **A** — add **Negate** modifier\n- Save\n\n---\n\n## Step 7 — Wire the Blueprint\n\nOpen **BP_Player** → Event Graph\n\n**BeginPlay chain:**\n- Event BeginPlay → Add Mapping Context\n- Add Mapping Context → Mapping Context slot: IMC_Player\n- Get Player Controller → Get Enhanced Input Local Player Subsystem → Target pin on Add Mapping Context\n\n**Movement chain:**\n- Enhanced Input Action IA_MoveRight node\n- Triggered pin → Add Movement Input execute pin\n- Action Value → Make Vector → X pin\n- Make Vector Return Value → World Direction on Add Movement Input\n- Set **Scale** on Add Movement Input to **-1.0** to fix direction\n\nCompile and Save.\n\n---\n\n## Step 8 — Game Mode\n- Right click Content Browser → Blueprint Class → Game Mode Base\n- Name it **GM_Player**\n- Double click, set **Default Pawn Class** to BP_Player\n- Compile and Save\n- Edit → Project Settings → Maps and Modes\n- Set **Default Game Mode** to GM_Player\n\n---\n\n## Step 9 — Floor Collision\n- Place Actors panel → search **Blocking Volume**\n- Drag into scene below character\n- Scale it wide and flat — X: 10, Y: 1, Z: 0.1\n- Character will land on it\n\n---\n\n## Step 10 — Background\n- Import background PNG into Content Browser\n- Apply Paper2D texture settings when prompted\n- Right click texture → Create Sprite\n- Drag sprite into level\n- Scale to fill background behind character\n\n---\n\n## Where We Stopped\nCharacter moves left and right correctly. Lands on collision floor. Background in scene. Camera not yet following player — that's the next session.\n\n## Next Steps\n- Camera setup with Spring Arm and Camera component\n- Jump input — IA_Jump action\n- Tile Map for proper level building\n- PaperZD animation states — idle and walk","date":"Mar 2, 2026"}];
 const EMBEDDED_NOTES = [{"id":"mmhwz5fh23asubmakzbh","title":"GitHub Quick Start Guide","category":"general","session":"","startHere":true,"content":"## What Is It?\n- **Git** — tracks every change you make to your files, like an infinite undo history\n- **GitHub** — a website that stores that history online so your whole team can access it\n\n---\n\n## One-Time Setup\n\n### Check if Git is installed\n```\ngit --version\n```\nYou should see something like `git version 2.52.0`\n\n### Create a new repo on GitHub\n1. Click **+** in the top right → **New repository**\n2. Give it a name (e.g. `studio-docs`)\n3. Set to **Private**\n4. Don't check any initialize options\n5. Click **Create repository**\n\n### Connect your existing folder to GitHub\nNavigate to your folder in the terminal, then run:\n```\ngit init\ngit add .\ngit commit -m \"first commit\"\n```\nThen copy the three commands GitHub shows you under **\"push an existing repository\"**:\n```\ngit remote add origin https://github.com/YOURNAME/YOURREPO.git\ngit branch -M main\ngit push -u origin main\n```\nYour files will now appear on GitHub.\n\n---\n\n## What Those Commands Do\n\n| Command | What it does |\n|--------|--------------|\n| `git init` | Turns your folder into a Git-tracked project |\n| `git add .` | Stages all files (puts them in the box) |\n| `git commit -m \"message\"` | Saves a snapshot (seals and labels the box) |\n| `git push` | Uploads your changes to GitHub (ships the box) |\n| `git pull` | Downloads the latest changes from GitHub |\n\n---\n\n## Daily Workflow\n```\ngit pull                        # grab latest before you start\n# ...do your work...\ngit add .\ngit commit -m \"what you changed\"\ngit push                        # upload when done\n```\n\n---\n\n## Inviting Your Partner\n1. Go to your repo on GitHub\n2. **Settings** → **Collaborators** → **Add people**\n3. Enter their GitHub username\n\nThey then clone the repo to their computer:\n```\ngit clone https://github.com/YOURNAME/YOURREPO.git\n```","date":"Mar 8, 2026"},{"id":"mmhbdm1zisrp02266c","title":"DaVinci Resolve — Session 1 Notes","category":"film","session":"Session 1","startHere":false,"content":"## Getting Started\n- Open Resolve → Project Manager → create or open a project\n- Import clips: Edit page → right click in Media Pool → Import Media\n- Drag clips to the timeline to begin your rough cut\n\n## Basic Editing\n- Scrub clips in the timeline to find good moments\n- **I** = mark in point, **O** = mark out point to trim\n- Drag trimmed clips next to each other to build your cut\n\n## Fixing a Clip\n- Select clip in timeline → open **Inspector** (top right)\n- Transform → **Rotation Angle** → type `180` to flip upside-down footage\n\n## Export Settings (Instagram)\n- Go to **Deliver page** (rocket icon)\n- Codec: **H.264**, Profile: **High**, Level: **4.1**\n- Bitrate: **Constant Bitrate (CBR)** at 10–15 Mbps\n- Resolution: **1080p** for landscape\n- Hit **Add to Render Queue** → **Render All**\n\n## Audio Tips\n- Natural/ambient audio can suffer from Instagram compression\n- Fix: bump audio bitrate to **320kbps** in export Audio tab\n- Or normalize: right click audio track → **Normalize Audio Levels**\n- Adding subtle background music helps audio survive compression\n\n## Notes\n- Instagram recompresses everything — give it a high quality source file\n- Keep Reels under 90 seconds, regular posts under 60\n- Let nature footage breathe — don't cut too fast","date":"Mar 8, 2026"},{"id":"mmfcltcolm7fd165qyf","title":"Just Getting There — Session 1","category":"unreal","session":"Session 1","startHere":false,"content":"*A roguelike dark comedy platformer. Everyday life gone wrong.*\n\n---\n\n## The Concept\n\n- Player is a tired everyman trying to complete a mundane task (get to the bus stop, buy milk, return a library book)\n- Each run the level layout shifts randomly — gaps, drifting platforms\n- NPCs wander and block or shove you\n- Environmental chaos escalates each run — falling ceiling tiles, indoor rain\n- Tone: melancholy comedy. Mundane framing of absurd situations.\n- On death: a dry journal entry from your character reflecting on what went wrong\n\n---\n\n## What We Built\n\nA working browser-based prototype in React + HTML5 Canvas. One file: App.jsx.\n\n**Features in the game:**\n- Randomly generated levels with ground gaps and floating drifting platforms\n- NPCs — friendly (block you, say passive-aggressive things) and hostile (shove you off ledges)\n- Falling ceiling tiles from run 2 onwards\n- Indoor rain from run 2 onwards\n- Time limit per run — escalates chaos if you linger\n- Death screen with randomized reason + journal entry\n- Win screen with deflating victory message\n- Each run gets harder — more NPCs, wider gaps, faster hostiles\n\n**Money throwing mechanic:**\n- Press F to throw money at NPCs\n- Coins arc through the air with gravity\n- Hit an NPC — they freeze for ~2 seconds\n- Limited to 5 coins per run\n\n---\n\n## Dev Environment\n\n- VS Code + Node.js v24.14.0 (installed via Chocolatey)\n- Vite + React via `npm create vite@latest . -- --template react`\n- Run with `npm run dev` → localhost:5173\n\n---\n\n## Key Concepts Learned\n\n- **useEffect** — runs code when something changes\n- **useRef** — holds game state without re-renders\n- **requestAnimationFrame** — drives the game loop\n- **ctx.fillRect** — draws everything on canvas\n- **e.key** — which key was pressed","date":"Mar 8, 2026"},{"id":"mm9tf7ngxh1f57z5dy","title":"Paper2D Setup Guide","category":"unreal","session":"Session 2","startHere":true,"content":"# Paper2D Setup Guide\n*Unreal Engine 5 — Working setup as of Day 2*\n\n---\n\n## Step 1 — Plugins\n- Edit → Plugins\n- Enable **Paper2D**\n- Enable **PaperZD** (install free from Marketplace first)\n- Restart when prompted\n\n---\n\n## Step 2 — New Level\n- File → New Level → Empty Level\n- Clean void, no distractions\n\nAdd a **Directional Light** from Place Actors so you can see anything.\n\n---\n\n## Step 3 — Import Your Sprite\n- Drag your PNG image into the Content Browser → PaperAssets folder\n- Right click the imported texture → Create Sprite\n- Name it **SP_Player**\n- Double click SP_Player to open, assign your texture in Source Texture slot\n\n---\n\n## Step 4 — Create a Flipbook\n- Right click **SP_Player** → Create Flipbook\n- Name it **FB_Player**\n- Paper Character requires a flipbook not a static sprite\n\n---\n\n## Step 5 — Create the Character Blueprint\n- Right click in Content Browser → Blueprint Class\n- Search for **Paper Character** → select it\n- Name it **BP_Player**\n- Double click to open\n- Click **Sprite** component in Components panel\n- In Details find **Source Flipbook** → assign **FB_Player**\n\n---\n\n## Step 6 — Enhanced Input Setup\n\nCreate two assets in Content Browser:\n\nRight click → Input → **Input Action**\n- Name it **IA_MoveRight**\n- Double click, set **Value Type** to Axis1D (float)\n- Save\n\nRight click → Input → **Input Mapping Context**\n- Name it **IMC_Player**\n- Double click to open\n- Click + next to Mappings\n- Select **IA_MoveRight**\n- Add key **D** — no modifier\n- Add key **A** — add **Negate** modifier\n- Save\n\n---\n\n## Step 7 — Wire the Blueprint\n\nOpen **BP_Player** → Event Graph\n\n**BeginPlay chain:**\n- Event BeginPlay → Add Mapping Context\n- Add Mapping Context → Mapping Context slot: IMC_Player\n- Get Player Controller → Get Enhanced Input Local Player Subsystem → Target pin on Add Mapping Context\n\n**Movement chain:**\n- Enhanced Input Action IA_MoveRight node\n- Triggered pin → Add Movement Input execute pin\n- Action Value → Make Vector → X pin\n- Make Vector Return Value → World Direction on Add Movement Input\n- Set **Scale** on Add Movement Input to **-1.0** to fix direction\n\nCompile and Save.\n\n---\n\n## Step 8 — Game Mode\n- Right click Content Browser → Blueprint Class → Game Mode Base\n- Name it **GM_Player**\n- Double click, set **Default Pawn Class** to BP_Player\n- Compile and Save\n- Edit → Project Settings → Maps and Modes\n- Set **Default Game Mode** to GM_Player\n\n---\n\n## Step 9 — Floor Collision\n- Place Actors panel → search **Blocking Volume**\n- Drag into scene below character\n- Scale it wide and flat — X: 10, Y: 1, Z: 0.1\n- Character will land on it\n\n---\n\n## Step 10 — Background\n- Import background PNG into Content Browser\n- Apply Paper2D texture settings when prompted\n- Right click texture → Create Sprite\n- Drag sprite into level\n- Scale to fill background behind character\n\n---\n\n## Where We Stopped\nCharacter moves left and right correctly. Lands on collision floor. Background in scene. Camera not yet following player — that's the next session.\n\n## Next Steps\n- Camera setup with Spring Arm and Camera component\n- Jump input — IA_Jump action\n- Tile Map for proper level building\n- PaperZD animation states — idle and walk","date":"Mar 2, 2026"}];
 
 const AUTHOR_PW_DEFAULT = 'lochsquatch';
@@ -1203,5 +1396,6 @@ loadReactions();
 renderSidebar();
 if (notes.length > 0) openNote(notes[0].id);
 </script>
-</body>
-</html>
+
+
+</body></html>
