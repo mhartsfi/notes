@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOCHSQUATCH — Field Notes &amp; Learning Journal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bark:    #1a1510;
+    --bark2:   #221e17;
+    --bark3:   #2e2820;
+    --moss:    #2d3d2a;
+    --moss2:   #3d5438;
+    --moss3:   #5a7a54;
+    --amber:   #8b6220;
+    --amber2:  #c4922e;
+    --amber3:  #e8b84b;
+    --fog:     #a09070;
+    --fog2:    #c8b898;
+    --parchment: #d4c9a8;
+    --parchment2: #e8dfc4;
+    --dim:     #5a5040;
+    --red:     #8b2a1a;
+    --red2:    #c04030;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bark);
+    color: var(--parchment);
+    font-family: 'Crimson Pro', serif;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 100; opacity: 0.5;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 28px 40px 20px;
+    border-bottom: 1px solid rgba(139,98,32,0.2);
+    background: var(--bark2);
+    display: flex; align-items: center; gap: 20px;
+    position: sticky; top: 0; z-index: 200;
+  }
+
+  .header-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem; letter-spacing: 4px;
+    color: var(--amber2);
+    text-shadow: 0 0 20px rgba(196,146,46,0.3);
+  }
+
+  .header-sub {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.58rem; color: var(--dim);
+    letter-spacing: 3px; text-transform: uppercase; margin-top: 3px;
+  }
+
+  .header-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+
+  .author-badge {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.52rem; letter-spacing: 2px;
+    color: var(--dim); text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid rgba(139,98,32,0.15);
+    border-radius: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+  }
+
+  .author-badge:hover { border-color: var(--amber); color: var(--amber2); }
+  .author-badge.active { border-color: var(--amber2); color: var(--amber3); background: rgba(139,98,32,0.08); }
+
+  /* ── BTN ── */
+  .btn {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 9px 18px; border-radius: 1px; cursor: pointer;
+    transition: all 0.2s; border: none;
+  }
+
+  .btn-primary { background: var(--amber); color: var(--bark); }
+  .btn-primary:hover { background: var(--amber2); }
+  .btn-outline { background: transparent; border: 1px solid rgba(139,98,32,0.3); color: var(--fog); }
+  .btn-outline:hover { border-color: var(--amber2); color: var(--amber2); }
+  .btn-danger { background: transparent; border: 1px solid rgba(139,42,26,0.3); color: #e07060; }
+  .btn-danger:hover { border-color: var(--red2); background: rgba(139,42,26,0.1); }
+
+  /* ── START HERE BANNER ── */
+  .start-here-banner {
+    background: linear-gradient(135deg, rgba(45,61,42,0.4) 0%, rgba(139,98,32,0.08) 100%);
+    border: 1px solid rgba(90,122,84,0.3);
+    border-left: 3px solid var(--moss3);
+    padding: 20px 28px;
+    margin: 24px 0;
+    border-radius: 2px;
+    display: flex; gap: 20px; align-items: flex-start;
+  }
+
+  .start-here-icon { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+
+  .start-here-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem; letter-spacing: 3px;
+    color: var(--moss3); margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .start-here-text {
+    font-size: 0.95rem; line-height: 1.7;
+    color: var(--fog2); margin-bottom: 12px;
+  }
+
+  .start-here-paths { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .path-tag {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.52rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 1px; cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .path-tag:hover { filter: brightness(1.2); }
+
+  /* ── LAYOUT ── */
+  .app {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: calc(100vh - 80px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    border-right: 1px solid rgba(139,98,32,0.15);
+    padding: 24px 0;
+    position: sticky; top: 80px;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+    background: var(--bark2);
+  }
+
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-track { background: var(--bark); }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+
+  .sidebar-search {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(139,98,32,0.1);
+    margin-bottom: 8px;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--bark);
+    border: 1px solid rgba(139,98,32,0.2);
+    border-radius: 2px; padding: 8px 12px;
+    color: var(--parchment);
+    font-family: 'Crimson Pro', serif; font-size: 0.88rem;
+    outline: none; transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--amber); }
+  .search-input::placeholder { color: var(--dim); }
+
+  /* Category filter pills */
+  .cat-filters {
+    padding: 8px 16px 12px;
+    display: flex; gap: 6px; flex-wrap: wrap;
+    border-bottom: 1px solid rgba(139,98,32,0.1);
+    margin-bottom: 8px;
+  }
+
+  .cat-pill {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.45rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 10px; cursor: pointer;
+    border: 1px solid rgba(139,98,32,0.2);
+    color: var(--dim); background: transparent;
+    transition: all 0.2s;
+  }
+
+  .cat-pill:hover { color: var(--fog); border-color: rgba(139,98,32,0.4); }
+  .cat-pill.active { color: var(--amber3); border-color: var(--amber); background: rgba(139,98,32,0.1); }
+
+  .sidebar-label {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.52rem; letter-spacing: 4px; color: var(--dim);
+    text-transform: uppercase; padding: 8px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .sidebar-count {
+    background: rgba(139,98,32,0.15); color: var(--amber);
+    border-radius: 10px; padding: 1px 7px; font-size: 0.5rem;
+  }
+
+  .sidebar-item {
+    padding: 10px 20px; cursor: pointer;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+
+  .sidebar-item:hover { background: rgba(139,98,32,0.06); }
+
+  .sidebar-item.active {
+    background: rgba(139,98,32,0.1);
+    border-left-color: var(--amber2);
+  }
+
+  .sidebar-item-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.88rem; color: var(--fog2); line-height: 1.3; flex: 1;
+  }
+
+  .sidebar-item.active .sidebar-item-title { color: var(--parchment2); }
+
+  .sidebar-item-cat {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.48rem; letter-spacing: 2px; padding: 2px 6px;
+    border-radius: 10px; text-transform: uppercase; flex-shrink: 0;
+  }
+
+  .start-here-marker {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--moss3); flex-shrink: 0; margin-top: 6px;
+    box-shadow: 0 0 6px rgba(90,122,84,0.6);
+  }
+
+  /* ── MAIN ── */
+  .main { padding: 40px 48px; max-width: 860px; }
+
+  /* ── NOTE VIEW ── */
+  .note-header {
+    margin-bottom: 32px; padding-bottom: 24px;
+    border-bottom: 1px solid rgba(139,98,32,0.15);
+  }
+
+  .note-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+
+  .note-cat-badge {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.55rem; letter-spacing: 3px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 1px;
+  }
+
+  .note-date {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.55rem; color: var(--dim); letter-spacing: 2px;
+  }
+
+  .note-session-num {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.52rem; letter-spacing: 2px;
+    color: var(--amber); border: 1px solid rgba(139,98,32,0.3);
+    padding: 2px 8px; border-radius: 1px;
+  }
+
+  .note-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem; font-weight: 600; color: var(--parchment2);
+    line-height: 1.2; margin-bottom: 8px;
+  }
+
+  .note-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; align-items: center; }
+
+  /* ── NOTE BODY ── */
+  .note-body-rendered h1, .note-body-rendered h2, .note-body-rendered h3 {
+    font-family: 'Cinzel', serif; color: var(--parchment2);
+    margin: 28px 0 12px; line-height: 1.2;
+  }
+
+  .note-body-rendered h1 { font-size: 1.6rem; border-bottom: 1px solid rgba(139,98,32,0.2); padding-bottom: 8px; }
+  .note-body-rendered h2 { font-size: 1.3rem; color: var(--amber2); }
+  .note-body-rendered h3 { font-size: 1.1rem; color: var(--fog2); }
+
+  .note-body-rendered p { margin-bottom: 16px; color: var(--fog2); line-height: 1.85; font-size: 1.05rem; }
+
+  .note-body-rendered ul, .note-body-rendered ol { margin: 12px 0 16px 24px; color: var(--fog2); }
+  .note-body-rendered li { margin-bottom: 6px; line-height: 1.7; font-size: 1rem; }
+
+  .note-body-rendered code {
+    font-family: 'Special Elite', cursive; font-size: 0.82rem;
+    background: var(--bark2); border: 1px solid rgba(139,98,32,0.2);
+    padding: 1px 6px; border-radius: 2px; color: var(--amber3);
+  }
+
+  .note-body-rendered pre {
+    background: var(--bark2); border: 1px solid rgba(139,98,32,0.15);
+    border-left: 3px solid var(--amber); padding: 20px 24px; margin: 20px 0;
+    overflow-x: auto; border-radius: 2px;
+  }
+
+  .note-body-rendered pre code {
+    background: transparent; border: none; padding: 0;
+    font-family: 'Courier New', monospace; font-size: 0.85rem;
+    color: var(--parchment2); line-height: 1.7;
+  }
+
+  .note-body-rendered strong { color: var(--parchment2); font-weight: 600; }
+  .note-body-rendered em { color: var(--amber2); font-style: italic; }
+
+  .note-body-rendered hr { border: none; border-top: 1px solid rgba(139,98,32,0.2); margin: 28px 0; }
+
+  .note-body-rendered blockquote {
+    border-left: 2px solid var(--amber); padding: 12px 20px; margin: 20px 0;
+    background: rgba(139,98,32,0.05); font-style: italic; color: var(--parchment2);
+  }
+
+  /* table */
+  .note-body-rendered table {
+    width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem;
+  }
+
+  .note-body-rendered th {
+    font-family: 'Special Elite', cursive; font-size: 0.6rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--amber2);
+    border-bottom: 1px solid rgba(139,98,32,0.3); padding: 8px 12px; text-align: left;
+  }
+
+  .note-body-rendered td {
+    padding: 8px 12px; border-bottom: 1px solid rgba(139,98,32,0.1);
+    color: var(--fog2); vertical-align: top;
+  }
+
+  .note-body-rendered tr:hover td { background: rgba(139,98,32,0.04); }
+
+  /* ── REACTIONS ── */
+  .reactions-bar {
+    display: flex; gap: 8px; align-items: center;
+    padding: 20px 0; margin-top: 32px;
+    border-top: 1px solid rgba(139,98,32,0.12);
+    flex-wrap: wrap;
+  }
+
+  .reactions-label {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.52rem; letter-spacing: 3px; color: var(--dim);
+    text-transform: uppercase; margin-right: 4px;
+  }
+
+  .reaction-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px; cursor: pointer;
+    border: 1px solid rgba(139,98,32,0.2);
+    background: transparent; transition: all 0.2s;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.55rem; letter-spacing: 1px; color: var(--dim);
+  }
+
+  .reaction-btn:hover { border-color: var(--amber); color: var(--fog2); background: rgba(139,98,32,0.06); }
+
+  .reaction-btn.reacted {
+    border-color: var(--amber2); color: var(--amber3);
+    background: rgba(139,98,32,0.12);
+  }
+
+  .reaction-emoji { font-size: 1rem; }
+  .reaction-count { font-size: 0.62rem; }
+
+  /* ── NEXT/PREV NAV ── */
+  .entry-nav {
+    display: flex; justify-content: space-between; gap: 16px;
+    margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid rgba(139,98,32,0.12);
+  }
+
+  .entry-nav-btn {
+    flex: 1; padding: 14px 20px;
+    background: var(--bark2);
+    border: 1px solid rgba(139,98,32,0.2);
+    border-radius: 2px; cursor: pointer;
+    transition: all 0.2s; text-align: left;
+  }
+
+  .entry-nav-btn.right { text-align: right; }
+  .entry-nav-btn:hover { border-color: var(--amber2); background: rgba(139,98,32,0.06); }
+
+  .entry-nav-dir {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.5rem; letter-spacing: 3px; color: var(--dim);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  .entry-nav-title {
+    font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--fog2); line-height: 1.3;
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty-state { text-align: center; padding: 80px 40px; color: var(--dim); }
+  .empty-icon { font-size: 3rem; display: block; margin-bottom: 20px; opacity: 0.4; }
+  .empty-title { font-family: 'Cinzel', serif; font-size: 1.4rem; letter-spacing: 3px; color: var(--fog); margin-bottom: 10px; }
+  .empty-sub { font-family: 'Special Elite', cursive; font-size: 0.62rem; letter-spacing: 2px; color: var(--dim); margin-bottom: 30px; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+    z-index: 1000; display: flex; align-items: flex-start;
+    justify-content: center; padding: 40px 20px; overflow-y: auto;
+  }
+
+  .modal-overlay.hidden { display: none; }
+
+  .modal {
+    background: var(--bark2); border: 1px solid rgba(139,98,32,0.2);
+    border-radius: 3px; width: 100%; max-width: 760px; overflow: hidden;
+  }
+
+  .modal-header {
+    padding: 20px 28px; border-bottom: 1px solid rgba(139,98,32,0.15);
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .modal-title { font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 3px; color: var(--amber2); }
+
+  .modal-close {
+    margin-left: auto; background: transparent;
+    border: 1px solid rgba(139,98,32,0.2); color: var(--fog);
+    width: 28px; height: 28px; border-radius: 2px; cursor: pointer;
+    font-size: 0.8rem; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .modal-close:hover { border-color: var(--red2); color: var(--red2); }
+
+  .modal-body { padding: 24px 28px; }
+
+  .form-group { margin-bottom: 18px; }
+
+  .form-label {
+    font-family: 'Special Elite', cursive; font-size: 0.58rem;
+    letter-spacing: 3px; color: var(--amber2); text-transform: uppercase;
+    display: block; margin-bottom: 8px;
+  }
+
+  .form-input {
+    width: 100%; background: var(--bark); border: 1px solid rgba(139,98,32,0.2);
+    border-radius: 2px; padding: 10px 14px; color: var(--parchment);
+    font-family: 'Crimson Pro', serif; font-size: 1rem; outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus { border-color: var(--amber); }
+
+  .form-textarea {
+    width: 100%; background: var(--bark); border: 1px solid rgba(139,98,32,0.2);
+    border-radius: 2px; padding: 14px; color: var(--parchment);
+    font-family: 'Courier New', monospace; font-size: 0.88rem; outline: none;
+    transition: border-color 0.2s; resize: vertical; min-height: 380px; line-height: 1.7;
+  }
+
+  .form-textarea:focus { border-color: var(--amber); }
+
+  .form-select {
+    width: 100%; background: var(--bark); border: 1px solid rgba(139,98,32,0.2);
+    border-radius: 2px; padding: 10px 14px; color: var(--parchment);
+    font-family: 'Special Elite', cursive; font-size: 0.7rem;
+    letter-spacing: 2px; outline: none; cursor: pointer;
+  }
+
+  .modal-footer {
+    padding: 16px 28px; border-top: 1px solid rgba(139,98,32,0.15);
+    display: flex; gap: 10px; justify-content: flex-end; align-items: center;
+  }
+
+  .modal-hint { font-family: 'Special Elite', cursive; font-size: 0.52rem; color: var(--dim); letter-spacing: 2px; margin-right: auto; }
+
+  /* ── CATEGORY COLORS ── */
+  .cat-arduino { background: rgba(139,98,32,0.15); color: var(--amber2); border: 1px solid rgba(139,98,32,0.3); }
+  .cat-unreal { background: rgba(45,61,42,0.2); color: var(--moss3); border: 1px solid rgba(45,61,42,0.4); }
+  .cat-moho { background: rgba(74,106,122,0.2); color: #7ab8d4; border: 1px solid rgba(74,106,122,0.4); }
+  .cat-film { background: rgba(106,74,122,0.2); color: #b87ad4; border: 1px solid rgba(106,74,122,0.4); }
+  .cat-haunt { background: rgba(139,42,26,0.15); color: #e07060; border: 1px solid rgba(139,42,26,0.3); }
+  .cat-lochsquatch { background: rgba(90,122,84,0.15); color: var(--moss3); border: 1px solid rgba(90,122,84,0.3); }
+  .cat-general { background: rgba(90,80,64,0.2); color: var(--fog2); border: 1px solid rgba(90,80,64,0.3); }
+
+  /* ── UNSAVED BANNER ── */
+  #unsavedBanner {
+    display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--bark2); border: 1px solid var(--amber); border-radius: 3px;
+    padding: 12px 24px; gap: 16px; align-items: center; z-index: 500;
+    font-family: 'Special Elite', cursive; font-size: 0.62rem;
+    letter-spacing: 2px; color: var(--amber2); box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  }
+
+  /* ── AUTHOR LOCK SCREEN ── */
+  #authorLock {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85); z-index: 2000;
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  #authorLock.open { display: flex; }
+
+  .lock-box {
+    background: var(--bark2); border: 1px solid rgba(139,98,32,0.3);
+    border-radius: 3px; padding: 36px; max-width: 380px; width: 100%; text-align: center;
+  }
+
+  .lock-icon-big { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+
+  .lock-title {
+    font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 4px;
+    color: var(--amber2); margin-bottom: 6px;
+  }
+
+  .lock-sub {
+    font-family: 'Special Elite', cursive; font-size: 0.55rem;
+    letter-spacing: 2px; color: var(--dim); margin-bottom: 24px;
+  }
+
+  .lock-input {
+    width: 100%; background: var(--bark); border: 1px solid rgba(139,98,32,0.25);
+    border-radius: 2px; padding: 12px; color: var(--parchment);
+    font-family: 'Special Elite', cursive; font-size: 0.8rem; letter-spacing: 3px;
+    text-align: center; outline: none; margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .lock-input:focus { border-color: var(--amber); }
+  .lock-input.shake { animation: shake 0.4s ease; border-color: var(--red2); }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+  }
+
+  .lock-error {
+    font-family: 'Special Elite', cursive; font-size: 0.52rem;
+    color: #e07060; letter-spacing: 1px; height: 16px; margin-bottom: 8px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; }
+    .main { padding: 24px 20px; }
+    header { padding: 16px 20px; }
+    .entry-nav { flex-direction: column; }
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bark); }
+  ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="header-brand">LOCHSQUATCH</div>
+    <div class="header-sub">Field Notes &amp; Learning Journal</div>
+  </div>
+  <div class="header-actions">
+    <button class="author-badge active" id="authorToggle" onclick="toggleAuthorMode()">✦ Author Mode</button>
+  </div>
+</header>
+
+<!-- AUTHOR LOCK SCREEN -->
+<div id="authorLock" class="">
+  <div class="lock-box">
+    <span class="lock-icon-big">🔏</span>
+    <div class="lock-title">AUTHOR ACCESS</div>
+    <div class="lock-sub">Enter password to edit journal</div>
+    <input type="password" class="lock-input" id="authorPwInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryAuthorUnlock()">
+    <div class="lock-error" id="authorLockError"></div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="btn btn-primary" onclick="tryAuthorUnlock()">Enter</button>
+      <button class="btn btn-outline" onclick="closeAuthorLock()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-search">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search field notes..." oninput="renderSidebar()">
+    </div>
+    <div class="cat-filters" id="catFilters">
+    <button class="cat-pill active" onclick="setCatFilter('all')">
+      All
+    </button>
+  
+    <button class="cat-pill " onclick="setCatFilter('unreal')">
+      Unreal
+    </button>
+  
+    <button class="cat-pill " onclick="setCatFilter('film')">
+      Film
+    </button>
+  
+    <button class="cat-pill " onclick="setCatFilter('general')">
+      General
+    </button>
+  </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">
+        Field Notes
+        <span class="sidebar-count" id="noteCount">4</span>
+      </div>
+      <div id="sidebarList">
+    <div class="sidebar-item " onclick="openNote('mmhwz5fh23asubmakzbh')">
+      <div class="start-here-marker"></div>
+      <div style="flex:1">
+        <div class="sidebar-item-title">GitHub Quick Start Guide</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-general">General</span>
+          
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">Mar 8, 2026</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="sidebar-item " onclick="openNote('mmhbdm1zisrp02266c')">
+      <div class="start-here-marker"></div>
+      <div style="flex:1">
+        <div class="sidebar-item-title">DaVinci Resolve — Session 1 Notes</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-film">Film</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--amber);letter-spacing:1px">Session 1</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">Mar 8, 2026</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="sidebar-item " onclick="openNote('mm9tf7ngxh1f57z5dy')">
+      <div class="start-here-marker"></div>
+      <div style="flex:1">
+        <div class="sidebar-item-title">Paper2D Setup Guide</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-unreal">Unreal</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--amber);letter-spacing:1px">Session 2</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">Mar 2, 2026</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="sidebar-item active" onclick="openNote('mmfcltcolm7fd165qyf')">
+      
+      <div style="flex:1">
+        <div class="sidebar-item-title">Just Getting There — Session 1</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-unreal">Unreal</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--amber);letter-spacing:1px">Session 1</span>
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">Mar 8, 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main" id="mainContent">
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <span class="empty-icon">📖</span>
+      <div class="empty-title">Select a Note</div>
+      <div class="empty-sub">Choose an entry from the sidebar to begin reading</div>
+    </div>
+    <div id="noteView" style="display: block;">
+    
+    <div class="start-here-banner">
+      <div class="start-here-icon">🧭</div>
+      <div>
+        <div class="start-here-title">New here?</div>
+        <div class="start-here-text">These are live field notes from an ongoing self-taught creative journey. Start with the beginner-marked entries if you're following along.</div>
+        <div class="start-here-paths">
+          
+            <button class="path-tag cat-general" onclick="openNote('mmhwz5fh23asubmakzbh')" style="background:transparent">
+              ↳ GitHub Quick Start Guide
+            </button>
+          
+            <button class="path-tag cat-film" onclick="openNote('mmhbdm1zisrp02266c')" style="background:transparent">
+              ↳ DaVinci Resolve — Session 1 Notes
+            </button>
+          
+            <button class="path-tag cat-unreal" onclick="openNote('mm9tf7ngxh1f57z5dy')" style="background:transparent">
+              ↳ Paper2D Setup Guide
+            </button>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="note-header">
+      <div class="note-meta">
+        <span class="note-cat-badge cat-unreal">Unreal</span>
+        <span class="note-session-num">Session 1</span>
+        <span class="note-date">Mar 8, 2026</span>
+        
+      </div>
+      <div class="note-title">Just Getting There — Session 1</div>
+      <div class="note-actions">
+        <button class="btn btn-outline" onclick="copyNote('mmfcltcolm7fd165qyf')">⎘ Copy Raw</button>
+        
+          <button class="btn btn-outline" onclick="openEditNote('mmfcltcolm7fd165qyf')">✎ Edit</button>
+          <button class="btn btn-primary" onclick="exportNotes()" style="font-size:0.58rem">⬇ Export HTML</button>
+        
+      </div>
+    </div>
+
+    <div class="note-body-rendered"><p><em>A roguelike dark comedy platformer. Everyday life gone wrong.</em></p>
+
+<hr>
+
+<h2>The Concept</h2>
+
+<ul><li>Player is a tired everyman trying to complete a mundane task (get to the bus stop, buy milk, return a library book)</li>
+<li>Each run the level layout shifts randomly — gaps, drifting platforms</li>
+<li>NPCs wander and block or shove you</li>
+<li>Environmental chaos escalates each run — falling ceiling tiles, indoor rain</li>
+<li>Tone: melancholy comedy. Mundane framing of absurd situations.</li>
+<li>On death: a dry journal entry from your character reflecting on what went wrong</li>
+
+<hr>
+
+<h2>What We Built</h2>
+
+<p>A working browser-based prototype in React + HTML5 Canvas. One file: App.jsx.</p>
+
+<p><strong>Features in the game:</strong></p>
+<li>Randomly generated levels with ground gaps and floating drifting platforms</li>
+<li>NPCs — friendly (block you, say passive-aggressive things) and hostile (shove you off ledges)</li>
+<li>Falling ceiling tiles from run 2 onwards</li>
+<li>Indoor rain from run 2 onwards</li>
+<li>Time limit per run — escalates chaos if you linger</li>
+<li>Death screen with randomized reason + journal entry</li>
+<li>Win screen with deflating victory message</li>
+<li>Each run gets harder — more NPCs, wider gaps, faster hostiles</li>
+
+<p><strong>Money throwing mechanic:</strong></p>
+<li>Press F to throw money at NPCs</li>
+<li>Coins arc through the air with gravity</li>
+<li>Hit an NPC — they freeze for ~2 seconds</li>
+<li>Limited to 5 coins per run</li>
+
+<hr>
+
+<h2>Dev Environment</h2>
+
+<li>VS Code + Node.js v24.14.0 (installed via Chocolatey)</li>
+<li>Vite + React via <code>npm create vite@latest . -- --template react</code></li>
+<li>Run with <code>npm run dev</code> → localhost:5173</li>
+
+<hr>
+
+<h2>Key Concepts Learned</h2>
+
+<li><strong>useEffect</strong> — runs code when something changes</li>
+<li><strong>useRef</strong> — holds game state without re-renders</li>
+<li><strong>requestAnimationFrame</strong> — drives the game loop</li>
+<li><strong>ctx.fillRect</strong> — draws everything on canvas</li>
+<li><strong>e.key</strong> — which key was pressed</li></ul></div>
+
+    <div class="reactions-bar">
+      <span class="reactions-label">Was this useful?</span>
+      
+          <button class="reaction-btn " onclick="toggleReaction('mmfcltcolm7fd165qyf','helpful')">
+            <span class="reaction-emoji">🧭</span>
+            <span>Helpful</span>
+            
+          </button>
+        
+          <button class="reaction-btn " onclick="toggleReaction('mmfcltcolm7fd165qyf','fire')">
+            <span class="reaction-emoji">🔥</span>
+            <span>Fire</span>
+            
+          </button>
+        
+          <button class="reaction-btn " onclick="toggleReaction('mmfcltcolm7fd165qyf','learned')">
+            <span class="reaction-emoji">🌿</span>
+            <span>Learned This</span>
+            
+          </button>
+        
+          <button class="reaction-btn " onclick="toggleReaction('mmfcltcolm7fd165qyf','confused')">
+            <span class="reaction-emoji">🦴</span>
+            <span>Still Confused</span>
+            
+          </button>
+        
+    </div>
+
+    <div class="entry-nav">
+      
+        <div class="entry-nav-btn" onclick="openNote('mmhbdm1zisrp02266c')">
+          <div class="entry-nav-dir">← Newer</div>
+          <div class="entry-nav-title">DaVinci Resolve — Session 1 Notes</div>
+        </div>
+      
+      
+        <div class="entry-nav-btn right" onclick="openNote('mm9tf7ngxh1f57z5dy')">
+          <div class="entry-nav-dir">Older →</div>
+          <div class="entry-nav-title">Paper2D Setup Guide</div>
+        </div>
+      
+    </div>
+
+    
+      <div style="margin-top:24px;padding:16px 20px;border:1px dashed rgba(139,98,32,0.2);border-radius:2px;display:flex;gap:10px;align-items:center">
+        <span style="font-family:'Special Elite',cursive;font-size:0.52rem;letter-spacing:2px;color:var(--dim)">AUTHOR MODE</span>
+        <button class="btn btn-primary" onclick="openAddNote()" style="font-size:0.58rem;padding:7px 14px">+ New Entry</button>
+        <button class="btn btn-outline" onclick="openEditNote('mmfcltcolm7fd165qyf')" style="font-size:0.58rem;padding:7px 14px">✎ Edit This Entry</button>
+        <button class="btn btn-outline" onclick="exportNotes()" style="font-size:0.58rem;padding:7px 14px">⬇ Export HTML</button>
+      </div>
+    
+  </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay hidden" id="noteModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">EDIT NOTE</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" id="noteTitle" placeholder="e.g. Paper2D Setup Guide">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="noteCategory">
+            <option value="arduino">Arduino &amp; Electronics</option>
+            <option value="unreal">Unreal / Game Dev</option>
+            <option value="moho">Moho / Animation</option>
+            <option value="film">Film &amp; VFX</option>
+            <option value="haunt">Haunt Design</option>
+            <option value="lochsquatch">Lochsquatch</option>
+            <option value="general">General</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="form-group">
+          <label class="form-label">Session # (optional)</label>
+          <input type="text" class="form-input" id="noteSession" placeholder="e.g. Session 1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mark as Start Here?</label>
+          <select class="form-select" id="noteStartHere">
+            <option value="no">No</option>
+            <option value="yes">Yes — beginner entry point</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Content — markdown supported</label>
+        <textarea class="form-textarea" id="noteContent" placeholder="# Your heading
+
+Write your field notes, guide, or session recap here...
+
+Supports: **bold**, *italic*, `code`, ``` code blocks ```, - lists, &gt; blockquotes, ## headings, --- dividers"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <span class="modal-hint">Markdown supported · Export HTML to save for GitHub</span>
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="deleteBtn" onclick="deleteNote()" style="display: inline-block;">Delete</button>
+      <button class="btn btn-primary" onclick="saveNote()">Save Note</button>
+    </div>
+  </div>
+</div>
+
+<!-- UNSAVED CHANGES BANNER -->
+<div id="unsavedBanner" style="display: flex;">
+  ⚠ Unsaved changes — Export HTML to push to GitHub
+  <button class="btn btn-primary" onclick="exportNotes()" style="font-size:0.58rem;padding:6px 14px">⬇ Export HTML</button>
+  <button class="btn btn-outline" onclick="hideBanner()" style="font-size:0.58rem;padding:6px 10px">✕</button>
+</div>
+
+<script>
+// ══ EMBEDDED DATA ══
+// ──EMBEDDED_NOTES──
+const EMBEDDED_NOTES = [{"id":"mmhwz5fh23asubmakzbh","title":"GitHub Quick Start Guide","category":"general","session":"","startHere":true,"content":"## What Is It?\n- **Git** — tracks every change you make to your files, like an infinite undo history\n- **GitHub** — a website that stores that history online so your whole team can access it\n\n---\n\n## One-Time Setup\n\n### Check if Git is installed\n```\ngit --version\n```\nYou should see something like `git version 2.52.0`\n\n### Create a new repo on GitHub\n1. Click **+** in the top right → **New repository**\n2. Give it a name (e.g. `studio-docs`)\n3. Set to **Private**\n4. Don't check any initialize options\n5. Click **Create repository**\n\n### Connect your existing folder to GitHub\nNavigate to your folder in the terminal, then run:\n```\ngit init\ngit add .\ngit commit -m \"first commit\"\n```\nThen copy the three commands GitHub shows you under **\"push an existing repository\"**:\n```\ngit remote add origin https://github.com/YOURNAME/YOURREPO.git\ngit branch -M main\ngit push -u origin main\n```\nYour files will now appear on GitHub.\n\n---\n\n## What Those Commands Do\n\n| Command | What it does |\n|--------|--------------|\n| `git init` | Turns your folder into a Git-tracked project |\n| `git add .` | Stages all files (puts them in the box) |\n| `git commit -m \"message\"` | Saves a snapshot (seals and labels the box) |\n| `git push` | Uploads your changes to GitHub (ships the box) |\n| `git pull` | Downloads the latest changes from GitHub |\n\n---\n\n## Daily Workflow\n```\ngit pull                        # grab latest before you start\n# ...do your work...\ngit add .\ngit commit -m \"what you changed\"\ngit push                        # upload when done\n```\n\n---\n\n## Inviting Your Partner\n1. Go to your repo on GitHub\n2. **Settings** → **Collaborators** → **Add people**\n3. Enter their GitHub username\n\nThey then clone the repo to their computer:\n```\ngit clone https://github.com/YOURNAME/YOURREPO.git\n```","date":"Mar 8, 2026"},{"id":"mmhbdm1zisrp02266c","title":"DaVinci Resolve — Session 1 Notes","category":"film","session":"Session 1","startHere":true,"content":"## Getting Started\n- Open Resolve → Project Manager → create or open a project\n- Import clips: Edit page → right click in Media Pool → Import Media\n- Drag clips to the timeline to begin your rough cut\n\n## Basic Editing\n- Scrub clips in the timeline to find good moments\n- **I** = mark in point, **O** = mark out point to trim\n- Drag trimmed clips next to each other to build your cut\n\n## Fixing a Clip\n- Select clip in timeline → open **Inspector** (top right)\n- Transform → **Rotation Angle** → type `180` to flip upside-down footage\n\n## Export Settings (Instagram)\n- Go to **Deliver page** (rocket icon)\n- Codec: **H.264**, Profile: **High**, Level: **4.1**\n- Bitrate: **Constant Bitrate (CBR)** at 10–15 Mbps\n- Resolution: **1080p** for landscape\n- Hit **Add to Render Queue** → **Render All**\n\n## Audio Tips\n- Natural/ambient audio can suffer from Instagram compression\n- Fix: bump audio bitrate to **320kbps** in export Audio tab\n- Or normalize: right click audio track → **Normalize Audio Levels**\n- Adding subtle background music helps audio survive compression\n\n## Notes\n- Instagram recompresses everything — give it a high quality source file\n- Keep Reels under 90 seconds, regular posts under 60\n- Let nature footage breathe — don't cut too fast","date":"Mar 8, 2026"},{"id":"mmfcltcolm7fd165qyf","title":"Just Getting There — Session 1","category":"unreal","session":"Session 1","startHere":false,"content":"*A roguelike dark comedy platformer. Everyday life gone wrong.*\n\n---\n\n## The Concept\n\n- Player is a tired everyman trying to complete a mundane task (get to the bus stop, buy milk, return a library book)\n- Each run the level layout shifts randomly — gaps, drifting platforms\n- NPCs wander and block or shove you\n- Environmental chaos escalates each run — falling ceiling tiles, indoor rain\n- Tone: melancholy comedy. Mundane framing of absurd situations.\n- On death: a dry journal entry from your character reflecting on what went wrong\n\n---\n\n## What We Built\n\nA working browser-based prototype in React + HTML5 Canvas. One file: App.jsx.\n\n**Features in the game:**\n- Randomly generated levels with ground gaps and floating drifting platforms\n- NPCs — friendly (block you, say passive-aggressive things) and hostile (shove you off ledges)\n- Falling ceiling tiles from run 2 onwards\n- Indoor rain from run 2 onwards\n- Time limit per run — escalates chaos if you linger\n- Death screen with randomized reason + journal entry\n- Win screen with deflating victory message\n- Each run gets harder — more NPCs, wider gaps, faster hostiles\n\n**Money throwing mechanic:**\n- Press F to throw money at NPCs\n- Coins arc through the air with gravity\n- Hit an NPC — they freeze for ~2 seconds\n- Limited to 5 coins per run\n\n---\n\n## Dev Environment\n\n- VS Code + Node.js v24.14.0 (installed via Chocolatey)\n- Vite + React via `npm create vite@latest . -- --template react`\n- Run with `npm run dev` → localhost:5173\n\n---\n\n## Key Concepts Learned\n\n- **useEffect** — runs code when something changes\n- **useRef** — holds game state without re-renders\n- **requestAnimationFrame** — drives the game loop\n- **ctx.fillRect** — draws everything on canvas\n- **e.key** — which key was pressed","date":"Mar 8, 2026"},{"id":"mm9tf7ngxh1f57z5dy","title":"Paper2D Setup Guide","category":"unreal","session":"Session 2","startHere":true,"content":"# Paper2D Setup Guide\n*Unreal Engine 5 — Working setup as of Day 2*\n\n---\n\n## Step 1 — Plugins\n- Edit → Plugins\n- Enable **Paper2D**\n- Enable **PaperZD** (install free from Marketplace first)\n- Restart when prompted\n\n---\n\n## Step 2 — New Level\n- File → New Level → Empty Level\n- Clean void, no distractions\n\nAdd a **Directional Light** from Place Actors so you can see anything.\n\n---\n\n## Step 3 — Import Your Sprite\n- Drag your PNG image into the Content Browser → PaperAssets folder\n- Right click the imported texture → Create Sprite\n- Name it **SP_Player**\n- Double click SP_Player to open, assign your texture in Source Texture slot\n\n---\n\n## Step 4 — Create a Flipbook\n- Right click **SP_Player** → Create Flipbook\n- Name it **FB_Player**\n- Paper Character requires a flipbook not a static sprite\n\n---\n\n## Step 5 — Create the Character Blueprint\n- Right click in Content Browser → Blueprint Class\n- Search for **Paper Character** → select it\n- Name it **BP_Player**\n- Double click to open\n- Click **Sprite** component in Components panel\n- In Details find **Source Flipbook** → assign **FB_Player**\n\n---\n\n## Step 6 — Enhanced Input Setup\n\nCreate two assets in Content Browser:\n\nRight click → Input → **Input Action**\n- Name it **IA_MoveRight**\n- Double click, set **Value Type** to Axis1D (float)\n- Save\n\nRight click → Input → **Input Mapping Context**\n- Name it **IMC_Player**\n- Double click to open\n- Click + next to Mappings\n- Select **IA_MoveRight**\n- Add key **D** — no modifier\n- Add key **A** — add **Negate** modifier\n- Save\n\n---\n\n## Step 7 — Wire the Blueprint\n\nOpen **BP_Player** → Event Graph\n\n**BeginPlay chain:**\n- Event BeginPlay → Add Mapping Context\n- Add Mapping Context → Mapping Context slot: IMC_Player\n- Get Player Controller → Get Enhanced Input Local Player Subsystem → Target pin on Add Mapping Context\n\n**Movement chain:**\n- Enhanced Input Action IA_MoveRight node\n- Triggered pin → Add Movement Input execute pin\n- Action Value → Make Vector → X pin\n- Make Vector Return Value → World Direction on Add Movement Input\n- Set **Scale** on Add Movement Input to **-1.0** to fix direction\n\nCompile and Save.\n\n---\n\n## Step 8 — Game Mode\n- Right click Content Browser → Blueprint Class → Game Mode Base\n- Name it **GM_Player**\n- Double click, set **Default Pawn Class** to BP_Player\n- Compile and Save\n- Edit → Project Settings → Maps and Modes\n- Set **Default Game Mode** to GM_Player\n\n---\n\n## Step 9 — Floor Collision\n- Place Actors panel → search **Blocking Volume**\n- Drag into scene below character\n- Scale it wide and flat — X: 10, Y: 1, Z: 0.1\n- Character will land on it\n\n---\n\n## Step 10 — Background\n- Import background PNG into Content Browser\n- Apply Paper2D texture settings when prompted\n- Right click texture → Create Sprite\n- Drag sprite into level\n- Scale to fill background behind character\n\n---\n\n## Where We Stopped\nCharacter moves left and right correctly. Lands on collision floor. Background in scene. Camera not yet following player — that's the next session.\n\n## Next Steps\n- Camera setup with Spring Arm and Camera component\n- Jump input — IA_Jump action\n- Tile Map for proper level building\n- PaperZD animation states — idle and walk","date":"Mar 2, 2026"}];
+const EMBEDDED_NOTES = [{"id":"mmhwz5fh23asubmakzbh","title":"GitHub Quick Start Guide","category":"general","session":"","startHere":true,"content":"## What Is It?\n- **Git** — tracks every change you make to your files, like an infinite undo history\n- **GitHub** — a website that stores that history online so your whole team can access it\n\n---\n\n## One-Time Setup\n\n### Check if Git is installed\n```\ngit --version\n```\nYou should see something like `git version 2.52.0`\n\n### Create a new repo on GitHub\n1. Click **+** in the top right → **New repository**\n2. Give it a name (e.g. `studio-docs`)\n3. Set to **Private**\n4. Don't check any initialize options\n5. Click **Create repository**\n\n### Connect your existing folder to GitHub\nNavigate to your folder in the terminal, then run:\n```\ngit init\ngit add .\ngit commit -m \"first commit\"\n```\nThen copy the three commands GitHub shows you under **\"push an existing repository\"**:\n```\ngit remote add origin https://github.com/YOURNAME/YOURREPO.git\ngit branch -M main\ngit push -u origin main\n```\nYour files will now appear on GitHub.\n\n---\n\n## What Those Commands Do\n\n| Command | What it does |\n|--------|--------------|\n| `git init` | Turns your folder into a Git-tracked project |\n| `git add .` | Stages all files (puts them in the box) |\n| `git commit -m \"message\"` | Saves a snapshot (seals and labels the box) |\n| `git push` | Uploads your changes to GitHub (ships the box) |\n| `git pull` | Downloads the latest changes from GitHub |\n\n---\n\n## Daily Workflow\n```\ngit pull                        # grab latest before you start\n# ...do your work...\ngit add .\ngit commit -m \"what you changed\"\ngit push                        # upload when done\n```\n\n---\n\n## Inviting Your Partner\n1. Go to your repo on GitHub\n2. **Settings** → **Collaborators** → **Add people**\n3. Enter their GitHub username\n\nThey then clone the repo to their computer:\n```\ngit clone https://github.com/YOURNAME/YOURREPO.git\n```","date":"Mar 8, 2026"},{"id":"mmhbdm1zisrp02266c","title":"DaVinci Resolve — Session 1 Notes","category":"film","session":"Session 1","startHere":false,"content":"## Getting Started\n- Open Resolve → Project Manager → create or open a project\n- Import clips: Edit page → right click in Media Pool → Import Media\n- Drag clips to the timeline to begin your rough cut\n\n## Basic Editing\n- Scrub clips in the timeline to find good moments\n- **I** = mark in point, **O** = mark out point to trim\n- Drag trimmed clips next to each other to build your cut\n\n## Fixing a Clip\n- Select clip in timeline → open **Inspector** (top right)\n- Transform → **Rotation Angle** → type `180` to flip upside-down footage\n\n## Export Settings (Instagram)\n- Go to **Deliver page** (rocket icon)\n- Codec: **H.264**, Profile: **High**, Level: **4.1**\n- Bitrate: **Constant Bitrate (CBR)** at 10–15 Mbps\n- Resolution: **1080p** for landscape\n- Hit **Add to Render Queue** → **Render All**\n\n## Audio Tips\n- Natural/ambient audio can suffer from Instagram compression\n- Fix: bump audio bitrate to **320kbps** in export Audio tab\n- Or normalize: right click audio track → **Normalize Audio Levels**\n- Adding subtle background music helps audio survive compression\n\n## Notes\n- Instagram recompresses everything — give it a high quality source file\n- Keep Reels under 90 seconds, regular posts under 60\n- Let nature footage breathe — don't cut too fast","date":"Mar 8, 2026"},{"id":"mmfcltcolm7fd165qyf","title":"Just Getting There — Session 1","category":"unreal","session":"Session 1","startHere":false,"content":"*A roguelike dark comedy platformer. Everyday life gone wrong.*\n\n---\n\n## The Concept\n\n- Player is a tired everyman trying to complete a mundane task (get to the bus stop, buy milk, return a library book)\n- Each run the level layout shifts randomly — gaps, drifting platforms\n- NPCs wander and block or shove you\n- Environmental chaos escalates each run — falling ceiling tiles, indoor rain\n- Tone: melancholy comedy. Mundane framing of absurd situations.\n- On death: a dry journal entry from your character reflecting on what went wrong\n\n---\n\n## What We Built\n\nA working browser-based prototype in React + HTML5 Canvas. One file: App.jsx.\n\n**Features in the game:**\n- Randomly generated levels with ground gaps and floating drifting platforms\n- NPCs — friendly (block you, say passive-aggressive things) and hostile (shove you off ledges)\n- Falling ceiling tiles from run 2 onwards\n- Indoor rain from run 2 onwards\n- Time limit per run — escalates chaos if you linger\n- Death screen with randomized reason + journal entry\n- Win screen with deflating victory message\n- Each run gets harder — more NPCs, wider gaps, faster hostiles\n\n**Money throwing mechanic:**\n- Press F to throw money at NPCs\n- Coins arc through the air with gravity\n- Hit an NPC — they freeze for ~2 seconds\n- Limited to 5 coins per run\n\n---\n\n## Dev Environment\n\n- VS Code + Node.js v24.14.0 (installed via Chocolatey)\n- Vite + React via `npm create vite@latest . -- --template react`\n- Run with `npm run dev` → localhost:5173\n\n---\n\n## Key Concepts Learned\n\n- **useEffect** — runs code when something changes\n- **useRef** — holds game state without re-renders\n- **requestAnimationFrame** — drives the game loop\n- **ctx.fillRect** — draws everything on canvas\n- **e.key** — which key was pressed","date":"Mar 8, 2026"},{"id":"mm9tf7ngxh1f57z5dy","title":"Paper2D Setup Guide","category":"unreal","session":"Session 2","startHere":true,"content":"# Paper2D Setup Guide\n*Unreal Engine 5 — Working setup as of Day 2*\n\n---\n\n## Step 1 — Plugins\n- Edit → Plugins\n- Enable **Paper2D**\n- Enable **PaperZD** (install free from Marketplace first)\n- Restart when prompted\n\n---\n\n## Step 2 — New Level\n- File → New Level → Empty Level\n- Clean void, no distractions\n\nAdd a **Directional Light** from Place Actors so you can see anything.\n\n---\n\n## Step 3 — Import Your Sprite\n- Drag your PNG image into the Content Browser → PaperAssets folder\n- Right click the imported texture → Create Sprite\n- Name it **SP_Player**\n- Double click SP_Player to open, assign your texture in Source Texture slot\n\n---\n\n## Step 4 — Create a Flipbook\n- Right click **SP_Player** → Create Flipbook\n- Name it **FB_Player**\n- Paper Character requires a flipbook not a static sprite\n\n---\n\n## Step 5 — Create the Character Blueprint\n- Right click in Content Browser → Blueprint Class\n- Search for **Paper Character** → select it\n- Name it **BP_Player**\n- Double click to open\n- Click **Sprite** component in Components panel\n- In Details find **Source Flipbook** → assign **FB_Player**\n\n---\n\n## Step 6 — Enhanced Input Setup\n\nCreate two assets in Content Browser:\n\nRight click → Input → **Input Action**\n- Name it **IA_MoveRight**\n- Double click, set **Value Type** to Axis1D (float)\n- Save\n\nRight click → Input → **Input Mapping Context**\n- Name it **IMC_Player**\n- Double click to open\n- Click + next to Mappings\n- Select **IA_MoveRight**\n- Add key **D** — no modifier\n- Add key **A** — add **Negate** modifier\n- Save\n\n---\n\n## Step 7 — Wire the Blueprint\n\nOpen **BP_Player** → Event Graph\n\n**BeginPlay chain:**\n- Event BeginPlay → Add Mapping Context\n- Add Mapping Context → Mapping Context slot: IMC_Player\n- Get Player Controller → Get Enhanced Input Local Player Subsystem → Target pin on Add Mapping Context\n\n**Movement chain:**\n- Enhanced Input Action IA_MoveRight node\n- Triggered pin → Add Movement Input execute pin\n- Action Value → Make Vector → X pin\n- Make Vector Return Value → World Direction on Add Movement Input\n- Set **Scale** on Add Movement Input to **-1.0** to fix direction\n\nCompile and Save.\n\n---\n\n## Step 8 — Game Mode\n- Right click Content Browser → Blueprint Class → Game Mode Base\n- Name it **GM_Player**\n- Double click, set **Default Pawn Class** to BP_Player\n- Compile and Save\n- Edit → Project Settings → Maps and Modes\n- Set **Default Game Mode** to GM_Player\n\n---\n\n## Step 9 — Floor Collision\n- Place Actors panel → search **Blocking Volume**\n- Drag into scene below character\n- Scale it wide and flat — X: 10, Y: 1, Z: 0.1\n- Character will land on it\n\n---\n\n## Step 10 — Background\n- Import background PNG into Content Browser\n- Apply Paper2D texture settings when prompted\n- Right click texture → Create Sprite\n- Drag sprite into level\n- Scale to fill background behind character\n\n---\n\n## Where We Stopped\nCharacter moves left and right correctly. Lands on collision floor. Background in scene. Camera not yet following player — that's the next session.\n\n## Next Steps\n- Camera setup with Spring Arm and Camera component\n- Jump input — IA_Jump action\n- Tile Map for proper level building\n- PaperZD animation states — idle and walk","date":"Mar 2, 2026"}];
+
+const AUTHOR_PW = 'lochsquatch';
+
+// ══ STATE ══
+let notes = [];
+let activeId = null;
+let editingId = null;
+let authorMode = false;
+let activeCatFilter = 'all';
+let reactions = {};
+
+const CAT_LABELS = {
+  arduino: 'Arduino', unreal: 'Unreal', moho: 'Moho',
+  film: 'Film', haunt: 'Haunt', lochsquatch: 'Lochsquatch', general: 'General'
+};
+
+const CAT_COLORS = {
+  arduino: '#c4922e', unreal: '#5a7a54', moho: '#7ab8d4',
+  film: '#b87ad4', haunt: '#e07060', lochsquatch: '#5a7a54', general: '#c8b898'
+};
+
+const REACTION_TYPES = [
+  { key: 'helpful', emoji: '🧭', label: 'Helpful' },
+  { key: 'fire', emoji: '🔥', label: 'Fire' },
+  { key: 'learned', emoji: '🌿', label: 'Learned This' },
+  { key: 'confused', emoji: '🦴', label: 'Still Confused' },
+];
+
+// ══ LOAD ══
+function loadData() {
+  try {
+    const local = localStorage.getItem('lochsquatch_notes_v3');
+    if (local) {
+      const parsed = JSON.parse(local);
+      if (parsed && parsed.length > 0) { notes = parsed; return; }
+    }
+  } catch(e) {}
+  notes = JSON.parse(JSON.stringify(EMBEDDED_NOTES));
+}
+
+function loadReactions() {
+  try {
+    const r = localStorage.getItem('lochsquatch_reactions');
+    if (r) reactions = JSON.parse(r);
+  } catch(e) {}
+}
+
+function saveNotes() {
+  try { localStorage.setItem('lochsquatch_notes_v3', JSON.stringify(notes)); } catch(e) {}
+  showUnsavedBanner();
+}
+
+function saveReactions() {
+  try { localStorage.setItem('lochsquatch_reactions', JSON.stringify(reactions)); } catch(e) {}
+}
+
+// ══ AUTHOR MODE ══
+function toggleAuthorMode() {
+  if (authorMode) {
+    authorMode = false;
+    document.getElementById('authorToggle').classList.remove('active');
+    renderSidebar();
+    if (activeId) openNote(activeId);
+    return;
+  }
+  document.getElementById('authorLock').classList.add('open');
+  setTimeout(() => document.getElementById('authorPwInput').focus(), 100);
+}
+
+function tryAuthorUnlock() {
+  const val = document.getElementById('authorPwInput').value;
+  if (val === AUTHOR_PW) {
+    authorMode = true;
+    document.getElementById('authorToggle').classList.add('active');
+    closeAuthorLock();
+    renderSidebar();
+    if (activeId) openNote(activeId);
+  } else {
+    const inp = document.getElementById('authorPwInput');
+    inp.classList.add('shake');
+    document.getElementById('authorLockError').textContent = 'Incorrect password.';
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('shake'), 400);
+  }
+}
+
+function closeAuthorLock() {
+  document.getElementById('authorLock').classList.remove('open');
+  document.getElementById('authorPwInput').value = '';
+  document.getElementById('authorLockError').textContent = '';
+}
+
+// ══ SIDEBAR ══
+function renderCatFilters() {
+  const cats = ['all', ...Object.keys(CAT_LABELS).filter(k => notes.some(n => n.category === k))];
+  document.getElementById('catFilters').innerHTML = cats.map(c => `
+    <button class="cat-pill ${activeCatFilter === c ? 'active' : ''}" onclick="setCatFilter('${c}')">
+      ${c === 'all' ? 'All' : CAT_LABELS[c]}
+    </button>
+  `).join('');
+}
+
+function setCatFilter(cat) {
+  activeCatFilter = cat;
+  renderSidebar();
+}
+
+function renderSidebar() {
+  renderCatFilters();
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  let filtered = notes.filter(n => {
+    const matchCat = activeCatFilter === 'all' || n.category === activeCatFilter;
+    const matchQuery = !query || n.title.toLowerCase().includes(query) || n.content.toLowerCase().includes(query);
+    return matchCat && matchQuery;
+  });
+
+  document.getElementById('noteCount').textContent = filtered.length;
+
+  const list = document.getElementById('sidebarList');
+  if (!filtered.length) {
+    list.innerHTML = `<div style="padding:16px 20px;font-family:'Special Elite',cursive;font-size:0.6rem;color:var(--dim);letter-spacing:2px">NO ENTRIES FOUND</div>`;
+    return;
+  }
+
+  // Start Here entries first
+  const startHere = filtered.filter(n => n.startHere);
+  const rest = filtered.filter(n => !n.startHere);
+  const sorted = [...startHere, ...rest];
+
+  list.innerHTML = sorted.map(n => `
+    <div class="sidebar-item ${n.id === activeId ? 'active' : ''}" onclick="openNote('${n.id}')">
+      ${n.startHere ? '<div class="start-here-marker"></div>' : ''}
+      <div style="flex:1">
+        <div class="sidebar-item-title">${n.title}</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">
+          <span class="sidebar-item-cat cat-${n.category}">${CAT_LABELS[n.category]}</span>
+          ${n.session ? `<span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--amber);letter-spacing:1px">${n.session}</span>` : ''}
+          <span style="font-family:'Special Elite',cursive;font-size:0.45rem;color:var(--dim);letter-spacing:1px">${n.date}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══ NOTE VIEW ══
+function openNote(id) {
+  activeId = id;
+  const note = notes.find(n => n.id === id);
+  if (!note) return;
+
+  document.getElementById('emptyState').style.display = 'none';
+  const view = document.getElementById('noteView');
+  view.style.display = 'block';
+
+  // Build reactions for this note
+  const noteReactions = reactions[id] || {};
+  const myReactions = JSON.parse(localStorage.getItem('lochsquatch_myreactions') || '{}');
+
+  // Next / Prev
+  const idx = notes.indexOf(note);
+  const prev = notes[idx + 1];
+  const next = notes[idx - 1];
+
+  // Start Here Banner
+  const startHereNotes = notes.filter(n => n.startHere);
+  const startHereBanner = startHereNotes.length > 0 && !note.startHere ? `
+    <div class="start-here-banner">
+      <div class="start-here-icon">🧭</div>
+      <div>
+        <div class="start-here-title">New here?</div>
+        <div class="start-here-text">These are live field notes from an ongoing self-taught creative journey. Start with the beginner-marked entries if you're following along.</div>
+        <div class="start-here-paths">
+          ${startHereNotes.map(n => `
+            <button class="path-tag cat-${n.category}" onclick="openNote('${n.id}')" style="background:transparent">
+              ↳ ${n.title}
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  ` : note.startHere ? `
+    <div class="start-here-banner">
+      <div class="start-here-icon">🌿</div>
+      <div>
+        <div class="start-here-title">Start Here</div>
+        <div class="start-here-text">This is a recommended entry point for beginners following along with this journal.</div>
+      </div>
+    </div>
+  ` : '';
+
+  view.innerHTML = `
+    ${startHereBanner}
+    <div class="note-header">
+      <div class="note-meta">
+        <span class="note-cat-badge cat-${note.category}">${CAT_LABELS[note.category]}</span>
+        ${note.session ? `<span class="note-session-num">${note.session}</span>` : ''}
+        <span class="note-date">${note.date}</span>
+        ${note.startHere ? `<span style="font-family:'Special Elite',cursive;font-size:0.48rem;letter-spacing:2px;color:var(--moss3);border:1px solid rgba(90,122,84,0.3);padding:2px 8px;border-radius:1px">★ START HERE</span>` : ''}
+      </div>
+      <div class="note-title">${note.title}</div>
+      <div class="note-actions">
+        <button class="btn btn-outline" onclick="copyNote('${note.id}')">⎘ Copy Raw</button>
+        ${authorMode ? `
+          <button class="btn btn-outline" onclick="openEditNote('${note.id}')">✎ Edit</button>
+          <button class="btn btn-primary" onclick="exportNotes()" style="font-size:0.58rem">⬇ Export HTML</button>
+        ` : ''}
+      </div>
+    </div>
+
+    <div class="note-body-rendered">${renderMarkdown(note.content)}</div>
+
+    <div class="reactions-bar">
+      <span class="reactions-label">Was this useful?</span>
+      ${REACTION_TYPES.map(r => {
+        const count = noteReactions[r.key] || 0;
+        const reacted = (myReactions[id] || []).includes(r.key);
+        return `
+          <button class="reaction-btn ${reacted ? 'reacted' : ''}" onclick="toggleReaction('${id}','${r.key}')">
+            <span class="reaction-emoji">${r.emoji}</span>
+            <span>${r.label}</span>
+            ${count > 0 ? `<span class="reaction-count">${count}</span>` : ''}
+          </button>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="entry-nav">
+      ${next ? `
+        <div class="entry-nav-btn" onclick="openNote('${next.id}')">
+          <div class="entry-nav-dir">← Newer</div>
+          <div class="entry-nav-title">${next.title}</div>
+        </div>
+      ` : '<div></div>'}
+      ${prev ? `
+        <div class="entry-nav-btn right" onclick="openNote('${prev.id}')">
+          <div class="entry-nav-dir">Older →</div>
+          <div class="entry-nav-title">${prev.title}</div>
+        </div>
+      ` : '<div></div>'}
+    </div>
+
+    ${authorMode ? `
+      <div style="margin-top:24px;padding:16px 20px;border:1px dashed rgba(139,98,32,0.2);border-radius:2px;display:flex;gap:10px;align-items:center">
+        <span style="font-family:'Special Elite',cursive;font-size:0.52rem;letter-spacing:2px;color:var(--dim)">AUTHOR MODE</span>
+        <button class="btn btn-primary" onclick="openAddNote()" style="font-size:0.58rem;padding:7px 14px">+ New Entry</button>
+        <button class="btn btn-outline" onclick="openEditNote('${note.id}')" style="font-size:0.58rem;padding:7px 14px">✎ Edit This Entry</button>
+        <button class="btn btn-outline" onclick="exportNotes()" style="font-size:0.58rem;padding:7px 14px">⬇ Export HTML</button>
+      </div>
+    ` : ''}
+  `;
+
+  renderSidebar();
+  window.scrollTo(0, 0);
+}
+
+// ══ REACTIONS ══
+function toggleReaction(noteId, key) {
+  if (!reactions[noteId]) reactions[noteId] = {};
+  const myReactions = JSON.parse(localStorage.getItem('lochsquatch_myreactions') || '{}');
+  if (!myReactions[noteId]) myReactions[noteId] = [];
+
+  const already = myReactions[noteId].includes(key);
+  if (already) {
+    myReactions[noteId] = myReactions[noteId].filter(k => k !== key);
+    reactions[noteId][key] = Math.max(0, (reactions[noteId][key] || 1) - 1);
+  } else {
+    myReactions[noteId].push(key);
+    reactions[noteId][key] = (reactions[noteId][key] || 0) + 1;
+  }
+
+  localStorage.setItem('lochsquatch_myreactions', JSON.stringify(myReactions));
+  saveReactions();
+  openNote(noteId);
+}
+
+// ══ ADD / EDIT ══
+function openAddNote() {
+  if (!authorMode) return;
+  editingId = null;
+  document.getElementById('modalTitle').textContent = 'NEW FIELD NOTE';
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('noteCategory').value = 'general';
+  document.getElementById('noteSession').value = '';
+  document.getElementById('noteStartHere').value = 'no';
+  document.getElementById('noteContent').value = '';
+  document.getElementById('deleteBtn').style.display = 'none';
+  document.getElementById('noteModal').classList.remove('hidden');
+}
+
+function openEditNote(id) {
+  if (!authorMode) return;
+  editingId = id;
+  const note = notes.find(n => n.id === id);
+  if (!note) return;
+  document.getElementById('modalTitle').textContent = 'EDIT NOTE';
+  document.getElementById('noteTitle').value = note.title;
+  document.getElementById('noteCategory').value = note.category;
+  document.getElementById('noteSession').value = note.session || '';
+  document.getElementById('noteStartHere').value = note.startHere ? 'yes' : 'no';
+  document.getElementById('noteContent').value = note.content;
+  document.getElementById('deleteBtn').style.display = 'inline-block';
+  document.getElementById('noteModal').classList.remove('hidden');
+}
+
+function saveNote() {
+  const title = document.getElementById('noteTitle').value.trim();
+  const content = document.getElementById('noteContent').value.trim();
+  if (!title) { alert('Please add a title.'); return; }
+  if (!content) { alert('Please add some content.'); return; }
+
+  const category = document.getElementById('noteCategory').value;
+  const session = document.getElementById('noteSession').value.trim();
+  const startHere = document.getElementById('noteStartHere').value === 'yes';
+  const date = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  if (editingId) {
+    const note = notes.find(n => n.id === editingId);
+    if (note) { note.title = title; note.category = category; note.content = content; note.session = session; note.startHere = startHere; note.date = date; }
+    activeId = editingId;
+  } else {
+    const newNote = { id: uid(), title, category, content, session, startHere, date };
+    notes.unshift(newNote);
+    activeId = newNote.id;
+  }
+
+  saveNotes();
+  closeModal();
+  renderSidebar();
+  openNote(activeId);
+}
+
+function deleteNote() {
+  if (!editingId) return;
+  const note = notes.find(n => n.id === editingId);
+  if (!confirm(`Delete "${note?.title}"?`)) return;
+  notes = notes.filter(n => n.id !== editingId);
+  saveNotes();
+  closeModal();
+  activeId = null;
+  document.getElementById('emptyState').style.display = 'block';
+  document.getElementById('noteView').style.display = 'none';
+  renderSidebar();
+}
+
+function closeModal() { document.getElementById('noteModal').classList.add('hidden'); }
+
+document.getElementById('noteModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('noteModal')) closeModal();
+});
+
+// ══ COPY & EXPORT ══
+function copyNote(id) {
+  const note = notes.find(n => n.id === id);
+  if (!note) return;
+  navigator.clipboard.writeText(note.content).then(() => alert('Raw markdown copied to clipboard.'));
+}
+
+function exportNotes() {
+  const source = document.documentElement.outerHTML;
+  const notesJson = JSON.stringify(notes);
+  const startMarker = '// ──EMBEDDED_NOTES──';
+  const startIdx = source.indexOf(startMarker);
+  const lineEnd = source.indexOf('\n', startIdx + startMarker.length);
+  const updated = source.substring(0, startIdx) +
+    startMarker + '\nconst EMBEDDED_NOTES = ' + notesJson + ';' +
+    source.substring(lineEnd);
+  const blob = new Blob(['<!DOCTYPE html>\n' + updated], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'lochsquatch_journal.html';
+  a.click();
+  URL.revokeObjectURL(url);
+  hideBanner();
+}
+
+// ══ BANNER ══
+function showUnsavedBanner() {
+  document.getElementById('unsavedBanner').style.display = 'flex';
+}
+
+function hideBanner() {
+  document.getElementById('unsavedBanner').style.display = 'none';
+}
+
+// ══ MARKDOWN ══
+function renderMarkdown(text) {
+  // tables
+  let html = text.replace(/^\|(.+)\|\s*\n\|[-| :]+\|\s*\n((?:\|.+\|\s*\n?)*)/gm, (_, header, rows) => {
+    const ths = header.split('|').filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`).join('');
+    const trs = rows.trim().split('\n').map(row => {
+      const tds = row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`).join('');
+      return `<tr>${tds}</tr>`;
+    }).join('');
+    return `<table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table>`;
+  });
+
+  html = html
+    .replace(/```([^`]*?)```/gs, (_, code) => `<pre><code>${escHtml(code.trim())}</code></pre>`)
+    .replace(/`([^`]+)`/g, (_, code) => `<code>${escHtml(code)}</code>`)
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^---$/gm, '<hr>')
+    .replace(/^(\d+)\. (.+)$/gm, '<li data-ol="true">$2</li>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+
+  html = html.replace(/(<li data-ol[^>]*>.*<\/li>\n?)+/gs, m => `<ol>${m.replace(/ data-ol="true"/g,'')}</ol>`);
+  html = html.replace(/(<li>(?!.*data-ol).*<\/li>\n?)+/gs, m => `<ul>${m}</ul>`);
+
+  html = html.split('\n').map(line => {
+    if (line.match(/^<(h[1-3]|ul|ol|li|pre|hr|blockquote|table|thead|tbody|tr|th|td)/)) return line;
+    if (line.trim() === '') return '';
+    return `<p>${line}</p>`;
+  }).join('\n');
+
+  return html;
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
+
+// ══ INIT ══
+loadData();
+loadReactions();
+renderSidebar();
+if (notes.length > 0) openNote(notes[0].id);
+</script>
+
+
+</body></html>
